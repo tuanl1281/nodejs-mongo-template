@@ -1,23 +1,19 @@
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
-
 import * as dotenv from 'dotenv';
 import validations from '@app/validations';
 
-// #region --- Parse ---
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-dotenv.config({ path: path.join(__dirname, '../../../.env') });
+// #region --- Parse --
+dotenv.config({ path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env' });
 const { value: envVars, error } = validations.environment.validate(process.env);
 if (error) {
   throw new Error('Invalid environment');
 }
 // #endregion
 
+// #region --- Commmon ---
 const isDevelopment = envVars.NODE_ENV;
 const isTest = envVars.NODE_ENV === 'test';
 const port = envVars.PORT;
+// #region
 
 // #region --- Database ---
 const mongodb = {

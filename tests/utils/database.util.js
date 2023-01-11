@@ -1,24 +1,27 @@
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import { mongodb } from '@app/configurations/environment.configuration';
 
 const initial = () => {
   let database;
 
   beforeAll(async () => {
-    database = await MongoMemoryServer.create();
+    let mongoUri = mongodb?.url;
+    const mongoOptions = mongodb.options;
 
-    const mongoUri = await database.getUri();
-    const mongoOptions = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
+    if (!mongoUri) {
+      database = await MongoMemoryServer.create();
+      mongoUri = await database.getUri();
+    }
 
     await mongoose.connect(mongoUri, mongoOptions);
   });
 
   afterAll(async () => {
     await mongoose.connection.close();
-    await database.stop();
+    if (database) {
+      await database.stop();
+    }
   });
 };
 
