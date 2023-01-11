@@ -4,7 +4,8 @@
     "start": "nodemon --experimental-modules --es-module-specifier-resolution=node --loader ./src/loader.mjs ./src/index.js",
     "test": "jest --runInBand --detectOpenHandles",
     "lint": "eslint --ext .js .",
-    "format": "eslint --fix --ext .js . && prettier '*.{json,yaml}' --write --ignore-path .gitignore"
+    "format": "eslint --fix --ext .js . && prettier '*.{json,yaml}' --write --ignore-path .gitignore",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@babel/core": "^7.20.12",
