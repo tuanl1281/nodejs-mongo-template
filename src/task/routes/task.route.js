@@ -46,7 +46,7 @@ const routes = [
     isDevelopment: false,
     isPrivate: false,
   },
-]
+];
 
 const router = express.Router();
 routeUtils.register(router, routes);

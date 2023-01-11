@@ -2,7 +2,9 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --experimental-modules --es-module-specifier-resolution=node --loader ./src/loader.mjs ./src/index.js",
-    "test": "jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles",
+    "lint": "eslint --ext .js .",
+    "format": "eslint --fix --ext .js . && prettier '*.{json,yaml}' --write --ignore-path .gitignore"
   },
   "dependencies": {
     "@babel/core": "^7.20.12",
@@ -20,11 +22,20 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "async": "^3.2.4",
-    "jest": "^29.3.1",
-    "supertest": "^6.3.3",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/eslint-plugin": "^7.19.1",
     "@faker-js/faker": "^7.6.0",
-    "mongodb-memory-server": "^8.11.0"
+    "async": "^3.2.4",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "jest": "^29.3.1",
+    "lint-staged": "^13.1.0",
+    "mongodb-memory-server": "^8.11.0",
+    "prettier": "^2.8.2",
+    "supertest": "^6.3.3"
   },
   "aliases": {
     "@app": "./src/@app",

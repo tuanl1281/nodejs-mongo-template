@@ -1,3 +1,4 @@
+/* eslint-disable promise/no-callback-in-promise */
 import { ServiceError } from '@app/errors';
 
 const isAsyncFunction = (func) => func.constructor.name === 'AsyncFunction';
@@ -5,14 +6,9 @@ const catchAsync = (func) => (request, response, next) => func(request, response
 
 const getValidationError = (error) => {
   return new ServiceError(null, 'Invalid properties', error?.details);
-}
-
-
-export { 
-  isAsyncFunction,
-  catchAsync,
-  getValidationError,
 };
+
+export { isAsyncFunction, catchAsync, getValidationError };
 
 export default {
   isAsyncFunction,

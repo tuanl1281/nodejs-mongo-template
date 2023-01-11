@@ -4,11 +4,11 @@ import { paginate, toJSON } from '@app/databases/mongo.database';
 const TaskSchema = new mongoose.Schema({
   dateCreated: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   dateUpdated: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   description: {
     type: String,
@@ -16,11 +16,11 @@ const TaskSchema = new mongoose.Schema({
   isFinished: {
     type: Boolean,
     default: false,
-  }
+  },
 });
 
 // #region --- Plugins ---
-TaskSchema.plugin(paginate)
+TaskSchema.plugin(paginate);
 TaskSchema.plugin(toJSON);
 // #endregion
 

@@ -14,11 +14,11 @@ const validationMiddleware = (request, response, next) => {
         }
       }
     } catch (error) {
-      responseUtils.buildErrorResponse(response, { message: `Invalid ${error?.message}`});
+      responseUtils.buildErrorResponse(response, { message: `Invalid ${error?.message}` });
     }
   }
   /* Skip */
   next();
-}
+};
 
 export default validationMiddleware;

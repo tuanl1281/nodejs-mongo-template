@@ -3,7 +3,7 @@ import { taskService } from 'task/services';
 import { taskValidation } from 'task/validations';
 import { getValidationError } from '@app/utils/error.util';
 
-const getTasks = async (request, response, next) => {
+const getTasks = async (request, response) => {
   /* Validate */
   const { error, value: taskQuery } = taskValidation.getTasks.validate(request.params);
   if (error) {
@@ -15,14 +15,14 @@ const getTasks = async (request, response, next) => {
   return responseUtils.buildPagingResponse(response, { totalCounts, data });
 };
 
-const getTask = async (request, response, next) => {
+const getTask = async (request, response) => {
   /* Query */
   const task = await taskService.getTask(request.params.id);
   /* Return */
   return responseUtils.buildResultResponse(response, { data: task });
 };
 
-const createTask = async (request, response, next) => {
+const createTask = async (request, response) => {
   /* Validate */
   const { error, value: model } = taskValidation.createTask.validate(request.body);
   if (error) {
@@ -34,7 +34,7 @@ const createTask = async (request, response, next) => {
   return responseUtils.buildResultResponse(response, { data: task });
 };
 
-const updateTask = async (request, response, next) => {
+const updateTask = async (request, response) => {
   /* Validate */
   const { error, value: model } = taskValidation.updateTask.validate(request.body);
   if (error) {
@@ -46,7 +46,7 @@ const updateTask = async (request, response, next) => {
   return responseUtils.buildResultResponse(response, { data: task });
 };
 
-const deleteTask = async (request, response, next) => {
+const deleteTask = async (request, response) => {
   /* Execute */
   const task = await taskService.deleteTask(request.params.id);
   /* Return */
@@ -58,5 +58,5 @@ export default {
   getTask,
   createTask,
   updateTask,
-  deleteTask
-}
+  deleteTask,
+};

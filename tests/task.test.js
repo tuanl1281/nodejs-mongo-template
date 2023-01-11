@@ -29,8 +29,8 @@ describe('Tasks', () => {
   it('[PUT] /v1/tasks', async () => {
     /* Prepare */
     let task = {
-      description: faker.address.city()
-    }
+      description: faker.address.city(),
+    };
 
     await request(application)
       .post('/v1/tasks')
@@ -52,8 +52,8 @@ describe('Tasks', () => {
   it('[DELETE] /v1/tasks', async () => {
     /* Prepare */
     let task = {
-      description: faker.address.city()
-    }
+      description: faker.address.city(),
+    };
 
     await request(application)
       .post('/v1/tasks')
@@ -73,8 +73,8 @@ describe('Tasks', () => {
   it('[GET] /v1/tasks/:id', async () => {
     /* Prepare */
     let task = {
-      description: faker.address.city()
-    }
+      description: faker.address.city(),
+    };
 
     await request(application)
       .post('/v1/tasks')
@@ -96,8 +96,8 @@ describe('Tasks', () => {
   it('[GET] /v1/tasks', async () => {
     /* Prepare */
     let task = {
-      description: faker.address.city()
-    }
+      description: faker.address.city(),
+    };
 
     await request(application)
       .post('/v1/tasks')
@@ -114,4 +114,4 @@ describe('Tasks', () => {
         expect(response.body.data.totalCounts).not.toBe(0);
       });
   });
-})
+});

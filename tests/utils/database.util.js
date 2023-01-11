@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
-
 const initial = () => {
   let database;
 
@@ -21,7 +20,7 @@ const initial = () => {
     await mongoose.connection.close();
     await database.stop();
   });
-}
+};
 
 export default {
   initial,

@@ -12,9 +12,9 @@ const middleware = async (request, response, next) => {
     operations.push(authenticationMiddleware.bind(null, request, response, next));
   }
   /* Execute */
-  await async.series(operations, (error) => {
+  await async.series(operations, () => {
     next();
   });
-}
+};
 
 export default middleware;

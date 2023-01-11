@@ -6,14 +6,14 @@ const HTTP_METHODS = {
   GET: 'GET',
   POST: 'POST',
   PUT: 'PUT',
-  DELETE: 'DELETE'
+  DELETE: 'DELETE',
 };
 
 const prepare = ({ isPrivate }) => {
   return (request, response, next) => {
     response.locals.isPrivate = isPrivate;
     return middleware(request, response, next);
-  }
+  };
 };
 
 const assign = (router, { path, method, controller: controllerProps, ...rest }) => {
@@ -45,13 +45,7 @@ const assign = (router, { path, method, controller: controllerProps, ...rest }) 
 };
 
 const register = (router, routes) => {
-  routes.forEach(({
-    path,
-    method,
-    controller,
-    isDevelopment = false, 
-    isPrivate = false
-  }) => {
+  routes.forEach(({ path, method, controller, isDevelopment = false, isPrivate = false }) => {
     /* Development */
     if (isDevelopment && !environment.isDevelopment) {
       return;
@@ -59,14 +53,11 @@ const register = (router, routes) => {
     /* Default */
     assign(router, { path, method, controller, isPrivate });
   });
-}
-
-export {
-  HTTP_METHODS,
-  register
 };
+
+export { HTTP_METHODS, register };
 
 export default {
   HTTP_METHODS,
-  register
+  register,
 };

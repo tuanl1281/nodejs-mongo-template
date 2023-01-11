@@ -8,7 +8,7 @@ import Task from 'task/models/task.model';
  */
 const createTask = (model) => {
   return Task.create(model);
-}
+};
 
 /**
  * Update a task
@@ -20,7 +20,7 @@ const updateTask = async (model, id) => {
   // #region --- Validate ---
   const task = await getTask(id);
   if (!task) {
-    throw new ServiceError('', 'Task isn\'t existed');
+    throw new ServiceError('', "Task isn't existed");
   }
   // #endregion
 
@@ -30,7 +30,7 @@ const updateTask = async (model, id) => {
   await task.save();
   /* Return */
   return task;
-}
+};
 
 /**
  * Delete a task
@@ -41,7 +41,7 @@ const deleteTask = async (id) => {
   // #region --- Validate ---
   const task = await getTask(id);
   if (!task) {
-    throw new ServiceError('', 'Task isn\'t existed');
+    throw new ServiceError('', "Task isn't existed");
   }
   // #endregion
 
@@ -49,7 +49,7 @@ const deleteTask = async (id) => {
   await task.remove();
   /* Return */
   return task;
-}
+};
 
 /**
  * Get task by id
@@ -74,9 +74,9 @@ const getTasks = async ({ pageIndex, pageSize, ...query }) => {
       docs: 'data',
       totalDocs: 'totalCounts',
       limit: 'pageSize',
-      offset: 'pageIndex'
-    }
-  }
+      offset: 'pageIndex',
+    },
+  };
 
   const result = await Task.paginate(query, options);
   /* Return */
@@ -88,5 +88,5 @@ export default {
   getTask,
   createTask,
   updateTask,
-  deleteTask
-}
+  deleteTask,
+};

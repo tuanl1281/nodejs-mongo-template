@@ -10,19 +10,19 @@ const database = (url, options) => {
       console.log(`[MongoDB] ${JSON.stringify(error)}`);
     }
   });
-  
+
   mongoose.connection.on('connected', () => {
     if (isDevelopment) {
       console.log('[MongoDB] Connected');
     }
   });
-  
+
   mongoose.connection.on('disconnected', () => {
     if (isDevelopment) {
       console.log('[MongoDB] Disconnected');
     }
   });
-}
+};
 
 // #region --- Plugin ---
 const toJSON = (schema) => {
@@ -48,7 +48,7 @@ const toJSON = (schema) => {
       if (transform) {
         return transform(doc, ret, options);
       }
-      
+
       return ret;
     },
   });
@@ -62,7 +62,7 @@ const toJSON = (schema) => {
     if (typeof ret._id !== 'undefined') {
       delete ret._id;
     }
-  }
+  };
 
   const removePrivatePaths = (ret, schema) => {
     for (const path in schema.paths) {
@@ -72,19 +72,16 @@ const toJSON = (schema) => {
         }
       }
     }
-  }
+  };
 
   const removeVersion = (ret) => {
     if (typeof ret.__v !== 'undefined') {
       delete ret.__v;
     }
-  }
-}
-
-export {
-  paginate,
-  toJSON
+  };
 };
+
+export { paginate, toJSON };
 // #endregion
 
 export default database;
