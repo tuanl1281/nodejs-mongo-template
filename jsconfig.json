@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["./src/app/*"],
+      "task/*": ["./src/task/*"],
+    }
+  },
+  "include": [
+    "src", "tests"
+  ]
+}
