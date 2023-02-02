@@ -3,6 +3,7 @@
   "coveragePathIgnorePatterns": ["/node_modules/"],
   "moduleNameMapper": {
     "^@app/(.*)$": ["<rootDir>/src/@app/$1"],
+    "^authentication/(.*)$": ["<rootDir>/src/authentication/$1"],
     "^task/(.*)$": ["<rootDir>/src/task/$1"]
   }
 }

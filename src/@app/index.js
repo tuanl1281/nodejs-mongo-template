@@ -24,7 +24,9 @@ application.use('/v1', routes.v1);
 application.use((request, response) => response.status(httpStatus.NOT_FOUND).send());
 application.use((error, request, response) => {
   let status = httpStatus.INTERNAL_SERVER_ERROR;
-  if (error instanceof ServiceError) status = httpStatus.BAD_REQUEST;
+  if (error instanceof ServiceError) {
+    status = httpStatus.BAD_REQUEST;
+  }
 
   return responseUtils.buildErrorResponse(response, {
     status,

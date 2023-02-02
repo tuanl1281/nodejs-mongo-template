@@ -20,7 +20,7 @@ const updateTask = async (model, id) => {
   // #region --- Validate ---
   const task = await getTask(id);
   if (!task) {
-    throw new ServiceError('', "Task isn't existed");
+    throw new ServiceError(null, "Task isn't existed");
   }
   // #endregion
 
@@ -41,7 +41,7 @@ const deleteTask = async (id) => {
   // #region --- Validate ---
   const task = await getTask(id);
   if (!task) {
-    throw new ServiceError('', "Task isn't existed");
+    throw new ServiceError(null, "Task isn't existed");
   }
   // #endregion
 
