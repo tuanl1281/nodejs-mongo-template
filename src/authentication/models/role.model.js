@@ -1,23 +1,22 @@
 import mongoose from 'mongoose';
-import { paginate, toJSON } from '@app/databases/mongo.database';
+import { paginate, timetamp, toJSON } from '@app/databases/mongo.database';
 
 const RoleSchema = new mongoose.Schema({
-  dateCreated: {
-    type: Date,
-    default: Date.now,
-  },
-  dateUpdated: {
-    type: Date,
-    default: Date.now,
-  },
-  descrition: {
+  description: {
     type: String,
   },
 });
 
 // #region --- Plugins ---
 RoleSchema.plugin(paginate);
+RoleSchema.plugin(timetamp, {
+  createdAt: 'dateCreated',
+  updatedAt: 'dateUpdated',
+});
 RoleSchema.plugin(toJSON);
+// #endregion
+
+// #region --- Middlewares ---
 // #endregion
 
 // #region --- Statics ---

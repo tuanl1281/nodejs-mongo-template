@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
+import timetamp from 'mongoose-timestamp';
+
 import { isDevelopment } from '@app/configurations/environment.configuration';
 
 const database = (url, options) => {
-  mongoose.set('strictQuery', false);
   mongoose.connect(url, options);
 
   mongoose.connection.on('error', (error) => {
@@ -82,7 +83,7 @@ const toJSON = (schema) => {
   };
 };
 
-export { paginate, toJSON };
+export { paginate, timetamp, toJSON };
 // #endregion
 
 export default database;

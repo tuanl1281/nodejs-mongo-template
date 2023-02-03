@@ -1,26 +1,25 @@
 import mongoose from 'mongoose';
-import { paginate, toJSON } from '@app/databases/mongo.database';
+import { paginate, timetamp, toJSON } from '@app/databases/mongo.database';
 
 const PermissionSchema = new mongoose.Schema({
-  dateCreated: {
-    type: Date,
-    default: Date.now,
-  },
-  dateUpdated: {
-    type: Date,
-    default: Date.now,
-  },
   code: {
     type: String,
   },
-  descrition: {
+  description: {
     type: String,
   },
 });
 
 // #region --- Plugins ---
 PermissionSchema.plugin(paginate);
+PermissionSchema.plugin(timetamp, {
+  createdAt: 'dateCreated',
+  updatedAt: 'dateUpdated',
+});
 PermissionSchema.plugin(toJSON);
+// #endregion
+
+// #region --- Middlewares ---
 // #endregion
 
 // #region --- Statics ---

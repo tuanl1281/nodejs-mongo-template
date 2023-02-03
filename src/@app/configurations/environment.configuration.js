@@ -13,7 +13,7 @@ if (error) {
 const isDevelopment = envVars.NODE_ENV;
 const isTest = envVars.NODE_ENV === 'test';
 const port = envVars.PORT;
-// #region
+// #endregion
 
 // #region --- Database ---
 const mongodb = {
