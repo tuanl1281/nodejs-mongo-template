@@ -1,7 +1,9 @@
+import { jwt as jwtConfiguration } from '@app/configurations';
+import { UnauthorizedError } from '@app/errors';
 import { responseUtils } from '@app/utils';
+import { getValidationError } from '@app/utils/error.util';
 import { userService } from 'authentication/services';
 import { userValidation } from 'authentication/validations';
-import { getValidationError } from '@app/utils/error.util';
 
 const getUsers = async (request, response) => {
   /* Validate */
@@ -53,10 +55,37 @@ const deleteUser = async (request, response) => {
   return responseUtils.buildResultResponse(response, { data: user });
 };
 
+const loginUser = async (request, response) => {
+  /* Validate */
+  const { error, value: model } = userValidation.loginUser.validate(request.body);
+  if (error) {
+    throw getValidationError(error);
+  }
+  /* Execute */
+  const user = await userService.loginUser(model);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: user });
+};
+
+const getToken = async (request, response) => {
+  /* Validate */
+  if (!request.header('Authorization')) {
+    throw new UnauthorizedError(null, 'Unauthorized');
+  }
+
+  const token = request.header('Authorization').replace(`${jwtConfiguration.tokenType} `, '');
+  /* Execute */
+  const user = await userService.getToken(token);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: user });
+};
+
 export default {
   getUsers,
   getUser,
   createUser,
   updateUser,
   deleteUser,
+  loginUser,
+  getToken,
 };

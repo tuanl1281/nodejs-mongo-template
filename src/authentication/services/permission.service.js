@@ -2,7 +2,7 @@ import ServiceError from '@app/errors/service.error';
 import { Permission } from 'authentication/models';
 
 /**
- * Create a task
+ * Create a permission
  * @param {Object} model
  * @returns {Promise<Permission>}
  */
@@ -11,48 +11,48 @@ const createPermission = (model) => {
 };
 
 /**
- * Update a task
+ * Update a permission
  * @param {Object} model
  * @param {ObjectId} id
  * @returns {Promise<Permission>}
  */
 const updatePermission = async (model, id) => {
   // #region --- Validate ---
-  const task = await getPermission(id);
-  if (!task) {
+  const permission = await Permission.findById(id);
+  if (!permission) {
     throw new ServiceError(null, "Permission isn't existed");
   }
   // #endregion
 
   /* Builder */
-  Object.assign(task, model);
+  Object.assign(permission, model);
   /* Save */
-  await task.save();
+  await permission.save();
   /* Return */
-  return task;
+  return permission;
 };
 
 /**
- * Delete a task
+ * Delete a permission
  * @param {ObjectId} id
  * @returns {Promise<Permission>}
  */
 const deletePermission = async (id) => {
   // #region --- Validate ---
-  const task = await getPermission(id);
-  if (!task) {
+  const permission = await Permission.findById(id);
+  if (!permission) {
     throw new ServiceError(null, "Permission isn't existed");
   }
   // #endregion
 
   /* Save */
-  await task.remove();
+  await permission.remove();
   /* Return */
-  return task;
+  return permission;
 };
 
 /**
- * Get task by id
+ * Get permission by id
  * @param {ObjectId} id
  * @returns {Promise<Permission>}
  */
@@ -62,7 +62,7 @@ const getPermission = async (id) => {
 };
 
 /**
- * Get tasks
+ * Get permissions
  * @returns {Promise<List<Permission>>}
  */
 const getPermissions = async ({ pageIndex, pageSize, ...query }) => {

@@ -27,10 +27,20 @@ const updateUser = Joi.object()
     stripUnknown: true,
   });
 
+const loginUser = Joi.object()
+  .keys({
+    username: Joi.string().required(),
+    password: Joi.string().required(),
+  })
+  .options({
+    stripUnknown: true,
+  });
+
 export { getUsers, createUser, updateUser };
 
 export default {
   getUsers,
   createUser,
   updateUser,
+  loginUser,
 };

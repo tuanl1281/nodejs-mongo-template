@@ -5,7 +5,7 @@ import httpStatus from 'http-status';
 import compression from 'compression';
 
 import routes from '@app/routes';
-import { ServiceError } from '@app/errors';
+import { ServiceError, UnauthorizedError } from '@app/errors';
 import { responseUtils } from '@app/utils';
 
 const application = express();
@@ -21,11 +21,17 @@ application.use(express.urlencoded({ extended: true }));
 
 // #region --- Routes ---
 application.use('/v1', routes.v1);
-application.use((request, response) => response.status(httpStatus.NOT_FOUND).send());
-application.use((error, request, response) => {
+// eslint-disable-next-line no-unused-vars
+application.use((request, response, next) => response.status(httpStatus.NOT_FOUND).send());
+// eslint-disable-next-line no-unused-vars
+application.use((error, request, response, next) => {
   let status = httpStatus.INTERNAL_SERVER_ERROR;
   if (error instanceof ServiceError) {
     status = httpStatus.BAD_REQUEST;
+  }
+
+  if (error instanceof UnauthorizedError) {
+    status = httpStatus.UNAUTHORIZED;
   }
 
   return responseUtils.buildErrorResponse(response, {

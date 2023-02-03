@@ -12,6 +12,20 @@ import routeUtils, { HTTP_METHODS } from '@app/utils/route.util';
  */
 const routes = [
   {
+    path: '/login',
+    method: HTTP_METHODS.POST,
+    controller: userController.loginUser,
+    isDevelopment: false,
+    isPrivate: false,
+  },
+  {
+    path: '/token',
+    method: HTTP_METHODS.GET,
+    controller: userController.getToken,
+    isDevelopment: false,
+    isPrivate: false,
+  },
+  {
     path: '/',
     method: HTTP_METHODS.GET,
     controller: userController.getUsers,

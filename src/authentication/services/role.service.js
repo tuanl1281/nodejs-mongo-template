@@ -18,7 +18,7 @@ const createRole = (model) => {
  */
 const updateRole = async (model, id) => {
   // #region --- Validate ---
-  const task = await getRole(id);
+  const task = await Role.findById(id);
   if (!task) {
     throw new ServiceError(null, "Role isn't existed");
   }
@@ -39,7 +39,7 @@ const updateRole = async (model, id) => {
  */
 const deleteRole = async (id) => {
   // #region --- Validate ---
-  const task = await getRole(id);
+  const task = await Role.findById(id);
   if (!task) {
     throw new ServiceError(null, "Role isn't existed");
   }

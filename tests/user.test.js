@@ -126,4 +126,64 @@ describe('Users', () => {
         expect(response.body.data.totalCounts).not.toBe(0);
       });
   });
+
+  it('[POST] /v1/users/login', async () => {
+    /* Prepare */
+    let user = {
+      name: faker.name.fullName(),
+      username: faker.internet.userName(),
+      password: faker.internet.password(),
+    };
+
+    await request(application).post('/v1/users').send(user);
+    /* Execute */
+    await request(application)
+      .post(`/v1/users/login`)
+      .send(user)
+      .then((response) => {
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(typeof response.body.data.token).toBe('string');
+        expect(typeof response.body.data.refreshToken).toBe('string');
+        expect(typeof response.body.data.tokenType).toBe('string');
+        expect(typeof response.body.data.expiresIn).toBe('string');
+        expect(typeof response.body.data.userInfo).toBe('object');
+      });
+  });
+
+  it('[POST] /v1/users/token', async () => {
+    /* Prepare */
+    let tokenType = undefined;
+    let refreshToken = undefined;
+
+    let user = {
+      name: faker.name.fullName(),
+      username: faker.internet.userName(),
+      password: faker.internet.password(),
+    };
+
+    await request(application).post('/v1/users').send(user);
+    /* Execute */
+    await request(application)
+      .post(`/v1/users/login`)
+      .send(user)
+      .then((response) => {
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(typeof response.body.data.token).toBe('string');
+        expect(typeof response.body.data.refreshToken).toBe('string');
+        expect(typeof response.body.data.tokenType).toBe('string');
+        expect(typeof response.body.data.expiresIn).toBe('string');
+        expect(typeof response.body.data.userInfo).toBe('object');
+
+        tokenType = response.body.data.tokenType;
+        refreshToken = response.body.data.refreshToken;
+      });
+
+    await request(application)
+      .get(`/v1/users/token`)
+      .set('Authorization', `${tokenType} ${refreshToken}`)
+      .then((response) => {
+        expect(response.statusCode).toBe(httpStatus.OK);
+        expect(typeof response.body.data.token).toBe('string');
+      });
+  });
 });
