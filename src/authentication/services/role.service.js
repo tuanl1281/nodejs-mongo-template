@@ -60,7 +60,7 @@ const deleteRole = async (id) => {
  */
 const getRole = async (id) => {
   /* Query */
-  const role = Role.findById(id);
+  const role = await Role.findById(id);
   /* Return */
   return objectUtils.picker(role, ['id', 'description']);
 };
