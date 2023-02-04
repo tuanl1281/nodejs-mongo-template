@@ -36,11 +36,29 @@ const loginUser = Joi.object()
     stripUnknown: true,
   });
 
-export { getUsers, createUser, updateUser };
+const addPermissions = Joi.object()
+  .keys({
+    ids: Joi.array().required(),
+  })
+  .options({
+    stripUnknown: true,
+  });
+
+const removePermissions = Joi.object()
+  .keys({
+    ids: Joi.array().required(),
+  })
+  .options({
+    stripUnknown: true,
+  });
+
+export { getUsers, createUser, updateUser, addPermissions, removePermissions };
 
 export default {
   getUsers,
   createUser,
   updateUser,
   loginUser,
+  addPermissions,
+  removePermissions,
 };

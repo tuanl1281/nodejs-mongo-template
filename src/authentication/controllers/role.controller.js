@@ -53,10 +53,62 @@ const deleteRole = async (request, response) => {
   return responseUtils.buildResultResponse(response, { data: role });
 };
 
+const addUsers = async (request, response) => {
+  /* Validate */
+  const { error, value: model } = roleValidation.addUsers.validate(request.body);
+  if (error) {
+    throw getValidationError(error);
+  }
+  /* Execute */
+  const role = await roleService.addUsers(model, request.params.id);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: role });
+};
+
+const removeUsers = async (request, response) => {
+  /* Validate */
+  const { error, value: model } = roleValidation.removeUsers.validate(request.body);
+  if (error) {
+    throw getValidationError(error);
+  }
+  /* Execute */
+  const role = await roleService.removeUsers(model, request.params.id);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: role });
+};
+
+const addPermissions = async (request, response) => {
+  /* Validate */
+  const { error, value: model } = roleValidation.addPermissions.validate(request.body);
+  if (error) {
+    throw getValidationError(error);
+  }
+  /* Execute */
+  const role = await roleService.addPermissions(model, request.params.id);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: role });
+};
+
+const removePermissions = async (request, response) => {
+  /* Validate */
+  const { error, value: model } = roleValidation.removePermissions.validate(request.body);
+  if (error) {
+    throw getValidationError(error);
+  }
+  /* Execute */
+  const role = await roleService.removePermissions(model, request.params.id);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: role });
+};
+
 export default {
   getRoles,
   getRole,
   createRole,
   updateRole,
   deleteRole,
+  addUsers,
+  removeUsers,
+  addPermissions,
+  removePermissions,
 };

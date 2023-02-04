@@ -46,6 +46,34 @@ const routes = [
     isDevelopment: false,
     isPrivate: false,
   },
+  {
+    path: '/:id/addUsers',
+    method: HTTP_METHODS.PUT,
+    controller: roleController.addUsers,
+    isDevelopment: false,
+    isPrivate: false,
+  },
+  {
+    path: '/:id/removeUsers',
+    method: HTTP_METHODS.PUT,
+    controller: roleController.removeUsers,
+    isDevelopment: false,
+    isPrivate: false,
+  },
+  {
+    path: '/:id/addPerrmisions',
+    method: HTTP_METHODS.PUT,
+    controller: roleController.addPermissions,
+    isDevelopment: false,
+    isPrivate: false,
+  },
+  {
+    path: '/:id/removePermissions',
+    method: HTTP_METHODS.PUT,
+    controller: roleController.removePermissions,
+    isDevelopment: false,
+    isPrivate: false,
+  },
 ];
 
 const router = express.Router();

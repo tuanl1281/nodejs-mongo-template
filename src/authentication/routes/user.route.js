@@ -60,6 +60,20 @@ const routes = [
     isDevelopment: false,
     isPrivate: false,
   },
+  {
+    path: '/:id/addPermissions',
+    method: HTTP_METHODS.PUT,
+    controller: userController.addPermissions,
+    isDevelopment: false,
+    isPrivate: false,
+  },
+  {
+    path: '/:id/removePermissions',
+    method: HTTP_METHODS.PUT,
+    controller: userController.removePermissions,
+    isDevelopment: false,
+    isPrivate: false,
+  },
 ];
 const router = express.Router();
 routeUtils.register(router, routes);

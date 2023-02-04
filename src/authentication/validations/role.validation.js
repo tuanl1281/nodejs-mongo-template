@@ -25,10 +25,46 @@ const updateRole = Joi.object()
     stripUnknown: true,
   });
 
-export { getRoles, createRole, updateRole };
+const addUsers = Joi.object()
+  .keys({
+    ids: Joi.array().required(),
+  })
+  .options({
+    stripUnknown: true,
+  });
+
+const removeUsers = Joi.object()
+  .keys({
+    ids: Joi.array().required(),
+  })
+  .options({
+    stripUnknown: true,
+  });
+
+const addPermissions = Joi.object()
+  .keys({
+    ids: Joi.array().required(),
+  })
+  .options({
+    stripUnknown: true,
+  });
+
+const removePermissions = Joi.object()
+  .keys({
+    ids: Joi.array().required(),
+  })
+  .options({
+    stripUnknown: true,
+  });
+
+export { getRoles, createRole, updateRole, addUsers, removeUsers, addPermissions, removePermissions };
 
 export default {
   getRoles,
   createRole,
   updateRole,
+  addUsers,
+  removeUsers,
+  addPermissions,
+  removePermissions,
 };

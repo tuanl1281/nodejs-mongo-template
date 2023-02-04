@@ -5,6 +5,18 @@ const RoleSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  userIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'UserIds',
+    },
+  ],
+  permissionIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Permissions',
+    },
+  ],
 });
 
 // #region --- Plugins ---

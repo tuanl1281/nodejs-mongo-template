@@ -80,6 +80,30 @@ const getToken = async (request, response) => {
   return responseUtils.buildResultResponse(response, { data: user });
 };
 
+const addPermissions = async (request, response) => {
+  /* Validate */
+  const { error, value: model } = userValidation.addPermissions.validate(request.body);
+  if (error) {
+    throw getValidationError(error);
+  }
+  /* Execute */
+  const role = await userService.addPermissions(model, request.params.id);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: role });
+};
+
+const removePermissions = async (request, response) => {
+  /* Validate */
+  const { error, value: model } = userValidation.removePermissions.validate(request.body);
+  if (error) {
+    throw getValidationError(error);
+  }
+  /* Execute */
+  const role = await userService.removePermissions(model, request.params.id);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: role });
+};
+
 export default {
   getUsers,
   getUser,
@@ -88,4 +112,6 @@ export default {
   deleteUser,
   loginUser,
   getToken,
+  addPermissions,
+  removePermissions,
 };

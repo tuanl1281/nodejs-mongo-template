@@ -13,6 +13,18 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
   },
+  roleIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Roles',
+    },
+  ],
+  permissionIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Permissions',
+    },
+  ],
 });
 
 // #region --- Plugins ---

@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken';
 import { jwt as jwtConfiguration } from '@app/configurations';
 import { timeUtils, objectUtils } from '@app/utils';
 import { ServiceError, UnauthorizedError } from '@app/errors';
-import { User } from 'authentication/models';
+import { User, Permission } from 'authentication/models';
+import { permissionService } from 'authentication/services';
 
 /**
  * Create a user
@@ -63,6 +64,7 @@ const deleteUser = async (id) => {
  * @returns {Promise<User>}
  */
 const getUser = async (id) => {
+  /* Query */
   const user = await User.findById(id);
   /* Return */
   return objectUtils.picker(user, ['id', 'name', 'username']);
@@ -114,6 +116,7 @@ const loginUser = async (model) => {
   // #endregion
 
   /* Builder */
+  const permissionOfUser = await permissionService.getPermissionOfUser(user.id);
   const token = jwt.sign({ userId: user.id, name: user.name, username: user.username }, jwtConfiguration.secret, {
     expiresIn: jwtConfiguration.tokenExpired,
   });
@@ -129,7 +132,10 @@ const loginUser = async (model) => {
     refreshToken,
     tokenType: jwtConfiguration.tokenType,
     expiresIn: timeUtils.getLocalDateTime().add(jwtConfiguration.tokenExpired, 'seconds'),
-    userInfo: objectUtils.picker(user, ['id', 'name', 'username']),
+    userInfo: {
+      ...objectUtils.picker(user, ['id', 'name', 'username']),
+      permissions: permissionOfUser,
+    },
   };
   /* Return */
   return result;
@@ -157,6 +163,54 @@ const getToken = async (refreshToken) => {
   }
 };
 
+/**
+ * add permission to user
+ * @param {Object} model
+ * @param {Array<ObjectId>} model.ids
+ * @param {ObjectId} id
+ * @returns {Promise<ObjectId>}
+ */
+const addPermissions = async (model, id) => {
+  // #region --- Validate ---
+  const user = await User.findById(id);
+  if (!user) {
+    throw new ServiceError(null, "User isn't existed");
+  }
+  // #endregion
+
+  /* Execute */
+  const permissions = await Permission.find().where('_id').in(model.ids).exec();
+  (permissions || []).forEach((permission) => user.permissionIds.push(permission.id));
+
+  user.save();
+  /* Return */
+  return id;
+};
+
+/**
+ * remove permission of user
+ * @param {Object} model
+ * @param {Array<ObjectId>} model.ids
+ * @param {ObjectId} id
+ * @returns {Promise<ObjectId>}
+ */
+const removePermissions = async (model, id) => {
+  // #region --- Validate ---
+  const user = await User.findById(id);
+  if (!user) {
+    throw new ServiceError(null, "User isn't existed");
+  }
+  // #endregion
+
+  /* Execute */
+  const permissions = await Permission.find().where('_id').in(model.ids).exec();
+  user.permissionIds = user.permissionIds.filter((_) => !permissions.find((__) => __.id.toString() === _.toString()));
+
+  user.save();
+  /* Return */
+  return id;
+};
+
 export default {
   getUsers,
   getUser,
@@ -165,4 +219,6 @@ export default {
   deleteUser,
   loginUser,
   getToken,
+  addPermissions,
+  removePermissions,
 };
