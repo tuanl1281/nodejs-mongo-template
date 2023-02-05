@@ -1,5 +1,4 @@
 import { jwt as jwtConfiguration } from '@app/configurations';
-import { UnauthorizedError } from '@app/errors';
 import { responseUtils } from '@app/utils';
 import { getValidationError } from '@app/utils/error.util';
 import { userService } from 'authentication/services';
@@ -68,14 +67,16 @@ const loginUser = async (request, response) => {
 };
 
 const getToken = async (request, response) => {
-  /* Validate */
-  if (!request.header('Authorization')) {
-    throw new UnauthorizedError(null, 'Unauthorized');
-  }
-
-  const token = request.header('Authorization').replace(`${jwtConfiguration.tokenType} `, '');
   /* Execute */
+  const token = request.header('Authorization').replace(`${jwtConfiguration.tokenType} `, '');
   const user = await userService.getToken(token);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: user });
+};
+
+const getInformation = async (request, response) => {
+  /* Query */
+  const user = await userService.getUser(response.locals.user.id);
   /* Return */
   return responseUtils.buildResultResponse(response, { data: user });
 };
@@ -112,6 +113,7 @@ export default {
   deleteUser,
   loginUser,
   getToken,
+  getInformation,
   addPermissions,
   removePermissions,
 };

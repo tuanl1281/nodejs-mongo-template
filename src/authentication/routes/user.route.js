@@ -26,6 +26,13 @@ const routes = [
     isPrivate: false,
   },
   {
+    path: '/information',
+    method: HTTP_METHODS.GET,
+    controller: userController.getInformation,
+    isDevelopment: false,
+    isPrivate: true,
+  },
+  {
     path: '/',
     method: HTTP_METHODS.GET,
     controller: userController.getUsers,

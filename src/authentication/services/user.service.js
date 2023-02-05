@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import { jwt as jwtConfiguration } from '@app/configurations';
-import { timeUtils, objectUtils } from '@app/utils';
 import { ServiceError, UnauthorizedError } from '@app/errors';
+import { timeUtils, objectUtils } from '@app/utils';
 import { User, Permission } from 'authentication/models';
 import { permissionService } from 'authentication/services';
 
@@ -66,8 +66,18 @@ const deleteUser = async (id) => {
 const getUser = async (id) => {
   /* Query */
   const user = await User.findById(id);
+  if (!user) {
+    throw new ServiceError(null, "User isn't existed");
+  }
+
+  const permissionOfUser = await permissionService.getPermissionOfUser(user.id);
+  /* Builder */
+  const builder = {
+    ...objectUtils.picker(user, ['id', 'name', 'username']),
+    permissions: permissionOfUser,
+  };
   /* Return */
-  return objectUtils.picker(user, ['id', 'name', 'username']);
+  return builder;
 };
 
 /**
@@ -124,7 +134,7 @@ const loginUser = async (model) => {
   const refreshToken = jwt.sign(
     { userId: user.id, name: user.name, username: user.username },
     jwtConfiguration.refreshSecret,
-    { expiresIn: jwtConfiguration.refreshTokenExpired }
+    { expiresIn: jwtConfiguration.refreshTokenExpired },
   );
 
   const result = {
@@ -152,7 +162,7 @@ const getToken = async (refreshToken) => {
     const token = jwt.sign(
       { userId: claims.userId, name: claims.name, username: claims.username },
       jwtConfiguration.secret,
-      { expiresIn: jwtConfiguration.tokenExpired }
+      { expiresIn: jwtConfiguration.tokenExpired },
     );
     /* Return */
     return {

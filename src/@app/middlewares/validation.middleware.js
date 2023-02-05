@@ -2,7 +2,7 @@ import validations from '@app/validations';
 import { isObject, isEmpty } from '@app/utils/object.util';
 import { responseUtils } from '@app/utils';
 
-const validationMiddleware = (request, response, next) => {
+const validationMiddleware = (request, response) => {
   /* Execute */
   if (isObject(request.params) && !isEmpty(request.params)) {
     /* Parameter */
@@ -17,8 +17,6 @@ const validationMiddleware = (request, response, next) => {
       responseUtils.buildErrorResponse(response, { message: `Invalid ${error?.message}` });
     }
   }
-  /* Skip */
-  next();
 };
 
 export default validationMiddleware;
