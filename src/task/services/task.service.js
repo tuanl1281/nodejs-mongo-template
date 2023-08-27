@@ -83,10 +83,32 @@ const getTasks = async ({ pageIndex, pageSize, ...query }) => {
   return result;
 };
 
+/**
+ * Complete task by id
+ * @param {ObjectId} id
+ * @returns {Promise<Task>}
+ */
+const completeTask = async (id) => {
+  // #region --- Validate ---
+  const task = await Task.findById(id);
+  if (!task) {
+    throw new ServiceError(null, "Task isn't existed");
+  }
+  // #endregion
+
+  /* Builder */
+  task.isFinished = true;
+  /* Save */
+  await task.save();
+  /* Return */
+  return task;
+};
+
 export default {
   getTasks,
   getTask,
   createTask,
   updateTask,
   deleteTask,
+  completeTask,
 };

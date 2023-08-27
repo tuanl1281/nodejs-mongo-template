@@ -53,10 +53,18 @@ const deleteTask = async (request, response) => {
   return responseUtils.buildResultResponse(response, { data: task });
 };
 
+const completeTask = async (request, response) => {
+  /* Execute */
+  const task = await taskService.completeTask(request.params.id);
+  /* Return */
+  return responseUtils.buildResultResponse(response, { data: task });
+};
+
 export default {
   getTasks,
   getTask,
   createTask,
   updateTask,
   deleteTask,
+  completeTask,
 };

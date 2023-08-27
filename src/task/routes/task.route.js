@@ -46,6 +46,13 @@ const routes = [
     isDevelopment: false,
     isPrivate: false,
   },
+  {
+    path: '/:id/complete',
+    method: HTTP_METHODS.PUT,
+    controller: taskController.completeTask,
+    isDevelopment: false,
+    isPrivate: false,
+  },
 ];
 
 const router = express.Router();
